@@ -1,0 +1,15 @@
+services:
+  server:
+    container_name: ${APP_NAME}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        GOLANG_VERSION: ${GOLANG_VERSION}
+    ports:
+      - ${PORT}:8080
+    environment:
+      PORT: ${PORT}
+    volumes:
+      - ../:/app
+    restart: always
