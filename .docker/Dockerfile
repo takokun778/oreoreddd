@@ -6,4 +6,6 @@ WORKDIR /app
 
 RUN go install github.com/cosmtrek/air@latest
 
+WORKDIR /app/cmd
+
 CMD ["air"]

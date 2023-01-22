@@ -1,6 +1,10 @@
 include .env
 export
 
+.PHONY: help
+help: ## Display this help screen
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
+
 .PHONY: name
 name: ## display app name
 	@echo ${APP_NAME}
@@ -25,6 +29,6 @@ up: ## docker compose up with air hot reload
 down: ## docker compose down
 	@docker compose --project-name ${APP_NAME} down
 
-.PHONY: help
-help: ## Display this help screen
-	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
+.PHONY: e2e
+e2e:
+	@go test -v ./e2e/... -tags e2e count=1

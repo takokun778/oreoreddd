@@ -50,6 +50,8 @@ func (s *Sample) get(w http.ResponseWriter, r *http.Request) {
 	sub := strings.TrimPrefix(r.URL.Path, "/"+SamplePath)
 	_, id := filepath.Split(sub)
 	if id == "" {
+		log.Printf("Failed to get sample: %s", r.URL.Path)
+
 		w.WriteHeader(http.StatusBadRequest)
 
 		return
